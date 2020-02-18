@@ -8,13 +8,15 @@ class App extends React.Component {
         <h1>ToDo List.</h1>
         <div class="list">
           <form>
-            <input type="text" placeholder="Add Item..." />
-            <button>
-              <i class="fas fa-plus"></i>
-            </button>
+            <div class="button-align">
+              <input type="text" placeholder="Add Item..." />
+              <button>
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
           </form>
           <ul>
-            <li>
+            <li class="strikethrough">
               Go surfing <i class="fas fa-minus-circle"></i>
             </li>
             <li>
