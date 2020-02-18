@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+
+* {
+  font-family: "Lato", sans-serif;
+}
+
+.layout {
+  background-color: #fbd81f;
+}
+
+::placeholder {
+  color: #d3d3d3;
+  border: #d3d3d3;
+}
+
+button {
+  background-color: #45c39f;
+}
+
+li {
+  color: #000000;
+}
