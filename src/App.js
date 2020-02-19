@@ -21,7 +21,7 @@ class App extends React.Component {
   updateName = e => {
     let inputValue = e.target.value;
     this.setState({ input: inputValue });
-    console.log(this.state);
+    //console.log(this.state);
   };
   addItem = e => {
     e.preventDefault();
@@ -81,12 +81,8 @@ class App extends React.Component {
           <ul>
             {this.state.items.map((e, i) => {
               return (
-                <li
-                  onClick={x => this.toggleDone(i)}
-                  key={e._id}
-                  className={this.getItemsStyle(e.done)}
-                >
-                  {e.name}
+                <li onClick={x => this.toggleDone(i)} key={e._id}>
+                  <span className={this.getItemsStyle(e.done)}>{e.name}</span>
                   <i
                     onClick={x => {
                       x.stopPropagation();
