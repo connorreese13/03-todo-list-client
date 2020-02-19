@@ -41,6 +41,7 @@ input {
 
 ::placeholder {
   color: #d3d3d3;
+  margin: 50px;
 }
 
 button {
@@ -86,6 +87,6 @@ li:hover i {
   color: #ff8c69;
 }
 
-.strikethrough {
+.done {
   text-decoration: line-through;
 }

@@ -1,30 +1,86 @@
 import React from "react";
 import "./styles/styles.css";
+import axios from "axios";
 
 class App extends React.Component {
+  state = {
+    items: [],
+    input: ""
+  };
+  componentDidMount() {
+    axios
+      .get("http://localhost:4000/items")
+      .then(response => {
+        console.log(response);
+        this.setState({ items: response.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  updateName = e => {
+    let inputValue = e.target.value;
+    this.setState({ input: inputValue });
+    console.log(this.state);
+  };
+  addItem = e => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4000/items", {
+        name: this.state.input
+      })
+      .then(response => {
+        console.log(this.state);
+        let submittedItems = this.state.items;
+        submittedItems.push(response.data);
+        this.setState({ items: submittedItems, input: "" });
+      });
+  };
+  toggleDone = e => {
+    axios
+      .patch(`http://localhost:4000/items/${this.state.items[e]._id}`, {
+        done: !this.state.items[e].done
+      })
+      .then(response => {
+        console.log(response.data);
+        this.state.items[e].done = response.data.done;
+        this.setState({ items: this.state.items });
+      });
+  };
+  getItemsStyle = e => {
+    return e ? "done" : "";
+  };
   render() {
     return (
-      <div class="layout">
+      <div className="layout">
         <h1>ToDo List.</h1>
-        <div class="list">
-          <form>
-            <div class="button-align">
-              <input type="text" placeholder="Add Item..." />
+        <div className="list">
+          <form onSubmit={this.addItem}>
+            <div className="button-align">
+              <input
+                onChange={this.updateName}
+                type="text"
+                value={this.state.input}
+                placeholder="Add Item..."
+              />
               <button>
-                <i class="fas fa-plus"></i>
+                <i className="fas fa-plus"></i>
               </button>
             </div>
           </form>
           <ul>
-            <li class="strikethrough">
-              Go surfing <i class="fas fa-minus-circle"></i>
-            </li>
-            <li>
-              Study JavaScript <i class="fas fa-minus-circle"></i>
-            </li>
-            <li>
-              Make coffee <i class="fas fa-minus-circle"></i>
-            </li>
+            {this.state.items.map((e, i) => {
+              return (
+                <li
+                  onClick={x => this.toggleDone(i)}
+                  key={e._id}
+                  className={this.getItemsStyle(e.done)}
+                >
+                  {e.name}
+                  <i className="fas fa-minus-circle"></i>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
