@@ -42,13 +42,23 @@ class App extends React.Component {
         done: !this.state.items[e].done
       })
       .then(response => {
-        console.log(response.data);
-        this.state.items[e].done = response.data.done;
-        this.setState({ items: this.state.items });
+        let tmp = this.state.items;
+        tmp[e].done = response.data.done;
+        this.setState({ items: tmp });
       });
   };
   getItemsStyle = e => {
     return e ? "done" : "";
+  };
+  deleteItem = e => {
+    axios
+      .delete(`http://localhost:4000/items/${this.state.items[e]._id}`)
+      .then(response => {
+        console.log(response);
+        let tmp = this.state.items;
+        delete tmp[e];
+        this.setState({ items: tmp });
+      });
   };
   render() {
     return (
@@ -77,7 +87,13 @@ class App extends React.Component {
                   className={this.getItemsStyle(e.done)}
                 >
                   {e.name}
-                  <i className="fas fa-minus-circle"></i>
+                  <i
+                    onClick={x => {
+                      x.stopPropagation();
+                      this.deleteItem(i);
+                    }}
+                    className="fas fa-minus-circle"
+                  ></i>
                 </li>
               );
             })}
