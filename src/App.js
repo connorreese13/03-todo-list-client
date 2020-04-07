@@ -9,7 +9,7 @@ class App extends React.Component {
   };
   componentDidMount() {
     axios
-      .get("http://localhost:4000/items")
+      .get(`${process.env.REACT_APP_API}/items`)
       .then(response => {
         console.log(response);
         this.setState({ items: response.data });
@@ -26,7 +26,7 @@ class App extends React.Component {
   addItem = e => {
     e.preventDefault();
     axios
-      .post("http://localhost:4000/items", {
+      .post(`${process.env.REACT_APP_API}/items`, {
         name: this.state.input
       })
       .then(response => {
@@ -38,7 +38,7 @@ class App extends React.Component {
   };
   toggleDone = e => {
     axios
-      .patch(`http://localhost:4000/items/${this.state.items[e]._id}`, {
+      .patch(`${process.env.REACT_APP_API}/items/${this.state.items[e]._id}`, {
         done: !this.state.items[e].done
       })
       .then(response => {
@@ -52,7 +52,7 @@ class App extends React.Component {
   };
   deleteItem = e => {
     axios
-      .delete(`http://localhost:4000/items/${this.state.items[e]._id}`)
+      .delete(`${process.env.REACT_APP_API}/items/${this.state.items[e]._id}`)
       .then(response => {
         console.log(response);
         let tmp = this.state.items;
